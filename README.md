@@ -50,16 +50,7 @@ The frontend bridges non-technical users with the audit engine by providing **ac
 
 ### 📁 Backend Structure
 
-backend/
-├── config/
-│ ├── mongo.js # CosmosDB (MongoDB API) connection
-│ └── sql.js # Azure SQL connection
-├── .env # Environment variables
-├── server.js # Main Express app entry point
-├── app.js # Middleware setup (helmet, cors, etc.)
-├── routes/ # Placeholder for audit routes
-├── controllers/ # Placeholder for logic (e.g., analyze)
-├── models/ # Placeholder for DB schemas
+<pre lang="markdown"> ### 📁 Backend Folder Structure ```plaintext backend/ ├── config/ # Configuration files │ ├── mongo.js # CosmosDB (MongoDB API) connection setup │ └── sql.js # Azure SQL connection setup ├── .env # Environment variables for secrets and config ├── server.js # Main entry point to start the Express app ├── app.js # Express app setup with middleware (helmet, cors, etc.) ├── routes/ # API route definitions for audit-related actions ├── controllers/ # Business logic, like triggering analysis ├── models/ # Data models/schemas (e.g., audit logs, user submissions) ``` </pre>
 
 ### 💾 Database Stack
 
