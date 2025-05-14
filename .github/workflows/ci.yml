@@ -48,6 +48,16 @@ jobs:
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
 
+      # Set up Babel for Jest transformation
+      - name: Set up Babel
+        run: |
+          npm install --save-dev @babel/core @babel/preset-env babel-jest
+
+      # Configure Jest to use Babel
+      - name: Configure Jest
+        run: |
+          echo '{"transform": {"^.+\\.js$": "babel-jest"}}' > jest.config.js
+
       # Run backend tests
       - name: Run backend tests
         run: npm test
