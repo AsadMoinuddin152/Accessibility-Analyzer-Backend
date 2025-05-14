@@ -88,3 +88,125 @@ The frontend bridges non-technical users with the audit engine by providing **ac
   - `config/mongo.js` → Manages Mongo connection
 
 - ✅ All database connection tests completed successfully
+
+---
+
+## ✅ Today's Progress (📅 14th May 2025)
+
+### 🧑‍💻 Authentication & User Management
+
+- ✅ User login and authentication APIs are fully implemented
+- ✅ Token-based authentication system integrated using **JSON Web Token (JWT)**
+- ✅ `argon2` used for secure password hashing
+- ✅ JWT middleware (`jwtAuth`) added to protect private routes
+- ✅ Forgot password feature implemented using password reset logic
+- ✅ User CRUD routes implemented:
+  - Create user (Signup)
+  - Login user
+  - Update user
+  - Delete user
+  - Get all users
+  - Get user by ID
+
+### 🧪 Testing & Validation
+
+- ✅ All API test cases have been written and are passing
+- ✅ End-to-end user creation and login flows tested manually
+- ✅ Verified JWT token generation and route protection
+
+### 📁 Database Integration
+
+- ✅ Azure SQL Database connected and tested (`user-info-db`)
+- ✅ Azure Cosmos DB (MongoDB API) connected and tested (`asad-mongo-db`)
+- ✅ Created config files:
+  - `config/sql.js` for SQL connection
+  - `config/mongo.js` for Cosmos DB connection
+
+### 👤 Example Test User (for manual login tests)
+
+```json
+{
+  "name": "Asad Moinuddin",
+  "email": "asad@example.com",
+  "phone": "9876543210",
+  "password": "Test@1234"
+}
+```
+
+## 🎯 Frontend Setup and Libraries
+
+### 🧑‍💻 Frontend Libraries and Dependencies
+
+The frontend of the application uses the following key npm libraries to build the user interface and functionality:
+
+- **Material UI (MUI)**: For building the UI components with a modern design system.
+
+  - `@mui/material`: Core MUI components.
+  - `@mui/icons-material`: MUI icons for use in the UI.
+
+- **Ant Design (antd)**: For additional UI components like tables, modals, etc.
+
+  - `antd`: Ant Design UI library.
+
+- **Axios**: For making HTTP requests to interact with backend APIs.
+
+  - `axios`: Promise-based HTTP client for the browser and Node.js.
+
+- **Redux**: For managing the global state of the application.
+
+  - `@reduxjs/toolkit`: A set of tools to simplify Redux development.
+  - `react-redux`: React bindings for Redux.
+
+- **React Hook Form**: For handling form state and validation.
+
+  - `react-hook-form`: Simple, performant form handling.
+
+- **React Router**: For routing between different pages of the app.
+
+  - `react-router-dom`: DOM bindings for React Router.
+
+- **React Toastify**: For showing toast notifications to the user.
+
+  - `react-toastify`: React component for easy-to-use notifications.
+
+- **Yup**: For form validation schema.
+
+  - `yup`: JavaScript schema builder for value parsing and validation.
+
+- **Redux Persist**: For persisting Redux state (e.g., user session data).
+
+  - `redux-persist`: To persist parts of the Redux state across page reloads.
+
+- **Dayjs**: For handling and formatting dates.
+
+  - `dayjs`: A lightweight date library.
+
+- **React Spinners**: For loading indicators.
+  - `react-spinners`: Provides customizable spinners.
+
+---
+
+### ⚙️ Development Tools
+
+- **ESLint**: For linting the JavaScript code to ensure code quality.
+
+  - `eslint`: Linter for JavaScript and JSX.
+  - `@eslint/js`: ESLint configuration.
+
+- **Jest**: For testing the frontend components and ensuring functionality.
+  - `jest`: JavaScript testing framework.
+  - `@testing-library/react`: For testing React components in a user-centric way.
+  - `@testing-library/jest-dom`: For custom DOM element matchers for Jest.
+  - `@testing-library/user-event`: For simulating user events in tests.
+
+---
+
+### 🚀 Scripts
+
+Here are the available scripts to run and build the frontend:
+
+- **`dev`**: Starts the development server using Vite.
+- **`build`**: Builds the app for production.
+- **`lint`**: Runs ESLint on the project to check for code issues.
+- **`preview`**: Previews the production build.
+- **`test`**: Runs Jest tests to ensure the frontend works as expected.
