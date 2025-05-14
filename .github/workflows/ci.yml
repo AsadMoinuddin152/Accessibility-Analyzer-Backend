@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: "14"
 
+      # Check Node.js version
+      - name: Check Node.js version
+        run: node -v
+
       # Cache node_modules (using actions/cache@v3)
       - name: Cache node modules
         uses: actions/cache@v3
@@ -54,10 +58,9 @@ jobs:
           npm install --save-dev @babel/core @babel/preset-env babel-jest
 
       # Configure Jest to use Babel
-      # Configure Jest to use Babel
       - name: Configure Jest
         run: |
-          echo "module.exports = { transform: { '^.+\\.js$': 'babel-jest' } };" > jest.config.js
+          echo "module.exports = { transform: { '^.+\\.js$': 'babel-jest' }, transformIgnorePatterns: ['/node_modules/(?!tedious)/'] };" > jest.config.js
 
       # Run backend tests
       - name: Run backend tests
