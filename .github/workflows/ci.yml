@@ -13,14 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up Node.js (choose the version you want, here it's '14')
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "14"
 
+      # Cache node_modules (using actions/cache@v3)
       - name: Cache node modules
         uses: actions/cache@v3
         with:
@@ -29,10 +32,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
+      # Install dependencies
       - name: Install dependencies
         run: |
           npm install
 
+      # Set environment variables from GitHub secrets
       - name: Set environment variables from GitHub secrets
         run: |
           echo "PORT=${{ secrets.PORT }}" >> $GITHUB_ENV
@@ -43,13 +48,6 @@ jobs:
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
 
+      # Run backend tests
       - name: Run backend tests
         run: npm test
-
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
