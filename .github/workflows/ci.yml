@@ -54,9 +54,10 @@ jobs:
           npm install --save-dev @babel/core @babel/preset-env babel-jest
 
       # Configure Jest to use Babel
+      # Configure Jest to use Babel
       - name: Configure Jest
         run: |
-          echo '{"transform": {"^.+\\.js$": "babel-jest"}}' > jest.config.js
+          echo "module.exports = { transform: { '^.+\\.js$': 'babel-jest' } };" > jest.config.js
 
       # Run backend tests
       - name: Run backend tests
