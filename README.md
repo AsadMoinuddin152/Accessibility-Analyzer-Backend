@@ -210,3 +210,132 @@ Here are the available scripts to run and build the frontend:
 - **`lint`**: Runs ESLint on the project to check for code issues.
 - **`preview`**: Previews the production build.
 - **`test`**: Runs Jest tests to ensure the frontend works as expected.
+
+## User Flow Diagram
+
+```mermaid
+graph TD
+  A[Landing Page] -->|Scan Now| B(URL Input Modal)
+  A -->|Sign Up| C[Auth: Signup Flow]
+  A -->|Login| D[Auth: Login]
+  B -->|Guest Mode| E[Dashboard]
+  C --> E
+  D --> E
+  E -->|New Scan| F[Report View]
+  F -->|Save| G[Project History]
+  F -->|Export| H[Share Modal]
+```
+
+## Key Features
+
+1. **One-Click Scanning**
+
+   - Paste any URL for instant WCAG analysis
+   - Real-time progress tracking
+
+2. **Interactive Reports**
+
+   - Filter violations by severity (Critical/Warning/Info)
+   - Side-by-side "Before/After" fix previews
+
+3. **Project Management**
+   - Save scans to projects
+   - Track accessibility improvements over time
+
+Page Features & Implementation
+
+## 1. Landing Page
+
+**Goal:** Convert visitors in 10 seconds
+
+| Feature         | Implementation Strategy                     |
+| --------------- | ------------------------------------------- |
+| URL Input Field | Use MUI TextField with URL validation regex |
+
+## 2. Auth Pages
+
+**Goal:** Minimize signup friction
+
+| Feature        | Implementation Strategy                                |
+| -------------- | ------------------------------------------------------ |
+| 2-Step Signup  | Form wizard pattern with session storage between steps |
+| Password Meter | Zxcvbn library integration for strength analysis       |
+| SSO Options    | Firebase Auth or Auth0 social login integration        |
+| Guest Mode     | LocalStorage for temporary session data                |
+
+## 3. Dashboard
+
+**Goal:** Centralized scan management
+
+| Feature        | Implementation Strategy                                     |
+| -------------- | ----------------------------------------------------------- |
+| Project List   | Virtualized list for performance with expandable cards      |
+| Scan Summary   | Radial progress chart for accessibility score visualization |
+| Violation Tabs | WCAG-categorized tabs with expandable violation cards       |
+| Quick Filters  | Redux-managed filter state with debounced updates           |
+
+## 4. Report Page
+
+**Goal:** Actionable insights
+
+| Feature          | Implementation Strategy                                |
+| ---------------- | ------------------------------------------------------ |
+| Visual Overlay   | HTML2Canvas for screenshot with SVG violation markers  |
+| Code Inspector   | Monaco Editor for syntax-highlighted code snippets     |
+| Fix Demos        | Lottie animations for complex interaction guidance     |
+| Timeline Compare | Overlaid Chart.js graphs for historical trend analysis |
+
+## 5. Settings
+
+**Goal:** Personalized configuration
+
+| Feature            | Implementation Strategy                              |
+| ------------------ | ---------------------------------------------------- |
+| WCAG Presets       | Dropdown with version-specific rule sets             |
+| Integration Setup  | OAuth flows with platform-specific API wrappers      |
+| Notification Prefs | Toggle switches grouped by notification type         |
+| Avatar Upload      | Cloudinary widget with auto-cropping and compression |
+
+---
+
+## Implementation Flow
+
+```mermaid
+graph LR
+  A[Landing Page] -->|Convert| B[Auth]
+  B -->|Authenticate| C[Dashboard]
+  C -->|Scan| D[Report]
+  D -->|Save| C
+  C -->|Configure| E[Settings]
+```
+
+## ✅ Today's Progress (📅 15th May 2025)
+
+### 🧑‍💻 Frontend Architecture & Routing
+
+- ✅ React Router set up with the following pages:
+  - `/` → Landing Page
+  - `/auth` → Login/Signup Page
+  - `/dashboard` → User Dashboard (protected)
+  - `/report/:scanId` → Scan Report Viewer
+  - `/settings` → User Preferences
+- ✅ Protected route implemented using Redux state + session validation logic:
+  - Redirects to `/auth` if token is missing, expired, or user is not authenticated
+  - Shows notification modal before redirecting
+
+### 🔐 Authentication & Redux State
+
+- ✅ Created Redux slice `authSlice` with:
+  - `token`, `user`, `isAuthenticated`, `isGuest`, and `lastLogin` fields
+  - `loginSuccess`, `logout`, and `guestLogin` actions
+- ✅ Integrated Redux Persist to store state in `localStorage`
+
+### 🎨 Auth Pages & UI Components
+
+- ✅ Built dynamic Auth Page:
+  - Toggles between Login and Signup
+  - Integrated password validation, instructions, and form control
+  - Signup includes password strength feedback and T&C checkbox
+- ✅ Created reusable Notification Modal:
+  - Auto-close feature with progress bar animation
+  - Used for alerts like session expiration and auth redirects
