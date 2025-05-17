@@ -339,3 +339,25 @@ graph LR
 - ✅ Created reusable Notification Modal:
   - Auto-close feature with progress bar animation
   - Used for alerts like session expiration and auth redirects
+
+## ✅ Today's Progress (📅 17th May 2025)
+
+### 🔐 Authentication API Integration
+
+- ✅ Successfully connected to the backend **Signup API** and verified its response:
+  - Received JWT token and user details: `{ id, name, email, phone }`
+- ✅ Extracted and parsed the response structure correctly for frontend use
+
+### 🧑‍💻 Redux Integration for Auth State
+
+- ✅ Implemented `loginSuccess` dispatch with correct payload:
+  - Parsed user fields from `result.data.user` and stored in Redux
+- ✅ Fixed mismatch in accessing user fields:
+  - Replaced `result.data.userId`, `name`, `email` with correct `result.data.user.id`, etc.
+- ✅ Verified Redux state using `useSelector` and ensured placement inside component body
+
+### 🧠 UX Handling After Auth
+
+- ✅ Added redirect logic with `setTimeout` to simulate post-signup/login redirect delay
+  - Set a `redirecting` state after 2 seconds of successful auth
+- ✅ Verified `auth` state with `console.log(auth)` to ensure proper state update
