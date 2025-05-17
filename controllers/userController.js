@@ -12,14 +12,25 @@ const signup = async (req, res) => {
 
   try {
     const pool = await sql.connect();
-    const result = await pool
+
+    // Check email
+    const resultEmail = await pool
       .request()
       .input("email", sql.NVarChar, email)
-      .input("phone", sql.NVarChar, phone)
-      .query("SELECT * FROM users WHERE email = @email OR phone = @phone");
+      .query("SELECT * FROM users WHERE email = @email");
 
-    if (result.recordset.length > 0) {
-      return res.status(400).json({ message: "Email or phone already exists" });
+    if (resultEmail.recordset.length > 0) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    // Check phone
+    const resultPhone = await pool
+      .request()
+      .input("phone", sql.NVarChar, phone)
+      .query("SELECT * FROM users WHERE phone = @phone");
+
+    if (resultPhone.recordset.length > 0) {
+      return res.status(400).json({ message: "Phone number already exists" });
     }
 
     const hashedPassword = await argon2.hash(password);
@@ -34,13 +45,37 @@ const signup = async (req, res) => {
         "INSERT INTO users (name, email, phone, hashed_password) VALUES (@name, @email, @phone, @hashed_password)"
       );
 
-    res.status(201).json({ message: "User created successfully" });
+    const newUserResult = await pool
+      .request()
+      .input("email", sql.NVarChar, email)
+      .query("SELECT id, name, email, phone FROM users WHERE email = @email");
+
+    if (newUserResult.recordset.length === 0) {
+      return res.status(500).json({ message: "User creation failed" });
+    }
+
+    const user = newUserResult.recordset[0];
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.status(201).json({
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+      },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
-
 const login = async (req, res) => {
   const { email, password } = req.body;
 
